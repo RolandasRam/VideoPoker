@@ -6,8 +6,9 @@ namespace VideoPoker
 {
     class Deck
     {
-        public Globals cardValues = new Globals();
+        public List<Card> removedCards = new List<Card>();
         public List<Card> cardsOnBoard = new List<Card>();
+        public static string[] splitedCards = new string[5];
         public void GetRandomNumber() // generating cards
         {
             Random rnd = new Random(Guid.NewGuid().GetHashCode());
@@ -21,7 +22,7 @@ namespace VideoPoker
                 if (isCardUnique)
                 {
                     cardsOnBoard.Add(new Card() { Value = cardValue, Suit = cardSuit });
-                    cardValues.RemovedCards.Add(new Card() { Value = cardValue, Suit = cardSuit });
+                    removedCards.Add(new Card() { Value = cardValue, Suit = cardSuit });
                     if (i<5)
                         Console.Write($"{ConvertToName(cardValue)} {cardSuit}  || ");
                     else
@@ -40,10 +41,10 @@ namespace VideoPoker
             heldCards = Console.ReadLine();
             while (heldCards != "D")
             {
-                Globals.splitedCards = heldCards.Split(',');
+                splitedCards = heldCards.Split(',');
                 for (int i = 1; i <= 5; i++)
                 {
-                    if (Globals.splitedCards.Contains(i.ToString()))
+                    if (splitedCards.Contains(i.ToString()))
                     {
                         Console.WriteLine(i + "-HELD");
                     }
@@ -72,19 +73,19 @@ namespace VideoPoker
             Random rnd = new Random(Guid.NewGuid().GetHashCode());
             for (int i = 1; i <= 5; i++)
             {
-                if (!Globals.splitedCards.Contains(i.ToString()))
+                if (!splitedCards.Contains(i.ToString()))
                 {
                     Array suits = Enum.GetValues(typeof(Suits));
                     int cardValue = rnd.Next(1, 14); // generate number from 1 to 13
                     string cardSuit = suits.GetValue(rnd.Next(0, 4)).ToString(); // generate suit
-                    bool isCardUnique = !cardValues.RemovedCards.Any(c => c.Value == cardValue && c.Suit == cardSuit);
+                    bool isCardUnique = !removedCards.Any(c => c.Value == cardValue && c.Suit == cardSuit);
                     if (isCardUnique)
                     {
                         var tempCard = cardsOnBoard.ElementAt(i - 1);
                         tempCard.Suit = cardSuit;
                         tempCard.Value = cardValue;
                         cardsOnBoard[i-1] = tempCard;
-                        cardValues.RemovedCards.Add(tempCard);
+                        removedCards.Add(tempCard);
                     }
                 }
             }

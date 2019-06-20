@@ -8,6 +8,7 @@ namespace VideoPoker
     {
         Deck deck = new Deck();
         private List<Card> cardsOnBoard;
+        int PlayerMoney = 100, Bet = 1;
         public Hand(List<Card> _cardsOnBoard)
         {
             cardsOnBoard = _cardsOnBoard;
@@ -176,8 +177,8 @@ namespace VideoPoker
             {
                 Console.WriteLine("                               " + GameResultText);
                 Console.WriteLine("==========================================================================");
-                Globals.PlayerMoney -= 1;
-                if(Globals.PlayerMoney<=0)
+                PlayerMoney -= 1;
+                if(PlayerMoney<=0)
                 {
                     Console.WriteLine("                         You have no money!");
                     Console.WriteLine("==========================================================================");
@@ -190,7 +191,7 @@ namespace VideoPoker
             {
                 Console.WriteLine("                             " + Combination);
                 Console.WriteLine("==========================================================================");
-                Globals.PlayerMoney += 1;
+                PlayerMoney += MoneyWon;
             }
             for (int i = 0; i <= 4; i++)
             {
@@ -202,12 +203,12 @@ namespace VideoPoker
             Console.WriteLine("\n"+"==========================================================================");
             if (MoneyWon == 0)
             {
-                Console.WriteLine("{0,32} {1,32}", "Bet:" + Globals.Bet, "Credit:" + Globals.PlayerMoney);
+                Console.WriteLine("{0,32} {1,32}", "Bet:" + Bet, "Credit:" + PlayerMoney);
                 Console.WriteLine("==========================================================================");
             }
             else
             {
-                Console.WriteLine("{0,-27} {1,-27} {2,-27}", GameResultText + ":" + MoneyWon, "Bet:" + Globals.Bet, "Credit:" + Globals.PlayerMoney);
+                Console.WriteLine("{0,-27} {1,-27} {2,-27}", GameResultText + ":" + MoneyWon, "Bet:" + Bet, "Credit:" + PlayerMoney);
                 Console.WriteLine("==========================================================================");
             }
         }
